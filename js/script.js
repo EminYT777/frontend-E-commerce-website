@@ -1,5 +1,6 @@
 const restApiUrl = "http://localhost:8080/api";
 
+export default restApiUrl;
 
 function fetchUserProfile() {
     const token = localStorage.getItem("token");
@@ -50,7 +51,7 @@ function showInProfileMenu(data) {
 }
 
 function handleProfileError(error) {
-     if (error.response) {
+    if (error.response) {
         const { status, data } = error.response;
 
         if (status === 401) {
@@ -62,37 +63,37 @@ function handleProfileError(error) {
             console.error(`Ошибка сервера (${status}):`, data);
             alert('Произошла ошибка на сервере. Пожалуйста, попробуйте позже.');
         }
-     } else {
+    } else {
         console.error('Сетевая ошибка', error.message);
-            alert('Проблема с сетью. Проверьте ваше подключение к интернету.');
-     }
-   }
+        alert('Проблема с сетью. Проверьте ваше подключение к интернету.');
+    }
+}
 
-   function logoutUser() {
+function logoutUser() {
     const token = localStorage.getItem('token');
     if (token) {
         axios
-        .post('http://localhost:8080/api/auth/logout', null, {
-            headers: {Authorization: `Bearer ${token}`},
-        })
-        .then(() => {
-            console.log('Logout successful!');
-            localStorage.removeItem('token');
-            window.location.href = '/index.html';
-        })
-        .catch(error => {
-            console.error('Ошибка при выходе:', error.response ? error.response.data : error.message);
-        });
+            .post('http://localhost:8080/api/auth/logout', null, {
+                headers: { Authorization: `Bearer ${token}` },
+            })
+            .then(() => {
+                console.log('Logout successful!');
+                localStorage.removeItem('token');
+                window.location.href = '/index.html';
+            })
+            .catch(error => {
+                console.error('Ошибка при выходе:', error.response ? error.response.data : error.message);
+            });
     } else {
         console.log('No token found, user might already be logged out');
     }
-   }
+}
 
 
 function showOutOfProfileMenu() {
     showHeader();
     showFooter();
-    const profileMenu = document.querySelector("/profileMenu");
+    const profileMenu = document.querySelector(".profileMenu");
     profileMenu.innerHTML = `
                <a class="nav-link" href="/pages/login/login.html">
                       Log in
